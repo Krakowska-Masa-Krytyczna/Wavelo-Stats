@@ -2,8 +2,8 @@
     Rowery obecnie niedostępne:<br>
     <table>
         <tbody>
-        <tr><td><img src="img/bicycleInHub.png"></td><td> w stacjach</td></tr>
-        <tr><td><img src="img/bicycleShadow.png"></td><td> poza stacjami</td></tr>
+        <tr><td><img src="img/bicycleInHub.png?v=2"></td><td> w stacjach</td></tr>
+        <tr><td><img src="img/bicycleShadow.png?v=2"></td><td> poza stacjami</td></tr>
         </tbody>
     </table>
 </div>
@@ -24,7 +24,7 @@
 
 <ng-map zoom='{{map_data.zoom}}' center="{{map_data.center.latitude}}, {{map_data.center.longitude}}" id="ngmapContainer">
     <marker id='m{{bike.id}}' ng-repeat="bike in current_data" position="{{bike.current_position.coordinates[1]}}, {{bike.current_position.coordinates[0]}}"    
-        icon='{{bike.hub_id ? "img/bicycleInHub.png" : "img/bicycleShadow.png" }}'
+        icon='{{bike.hub_id ? "img/bicycleInHub.png?v=2" : "img/bicycleShadow.png" }}'
         on-click="showDetail(bike)">
     </marker>
     <info-window id="foo-iw">
