@@ -60,6 +60,45 @@ angular.module('wavelo.stats.bikesDataService', ['angularMoment'])
                     })
 
             },
+            getDailyTripStatistics: function (dayOfYear) {
+                var datePart = moment(dayOfYear, 'DDD').tz("Europe/Warsaw").format("YYYY-MM-DD");
+                var url = serverUrl + '/split_data/wavelo_data-' + datePart + '_summary_trips.yaml?timestamp=' + Date.now();
+                return $http({
+                    method: 'GET',
+                    url: url
+                })
+                    .then(function (data) {
+                        if (!data)
+                            return null;
+                        return jsyaml.load(data['data']);
+                    }, function (response) {
+                        return null;
+                    })
+
+            },
+            getWeeklyTripStatistics: function (weekNumber) {
+
+                var deferred = $q.defer();
+                promises = [];
+
+                var monday = parseInt(moment(weekNumber, 'W').tz("Europe/Warsaw").startOf("isoWeek").format("DDD"));
+                for (i = 0; i < 7; i++) {
+                    promises.push(this.getDailyTripStatistics(monday + i));
+                }
+
+                return $q.all(promises)
+                    .then(function (results) {
+                        deferred.resolve(results);
+                        var week_data = {};
+                        for (day_data in results) {
+                            week_data[monday + parseInt(day_data)] = results[day_data];
+                        }
+                        return week_data;
+                    },
+                    function (errors) {
+                        deferred.reject(errors);
+                    })
+            },
             getCurrentState: function(){
                 url = serverUrl + '/wavelo_data_current.yaml?timestamp=' + Date.now();
                 return $http({

@@ -26,6 +26,7 @@
     "angular-moment": "^1.0.1",
     "angular-ui-router": "^0.4.2",
     "angular-google-maps": "^2.4.1",
-    "ngmap": "^1.18.4"
+    "ngmap": "^1.18.4",
+    "ngCytoscape": "^0.0.6"
   }
 }

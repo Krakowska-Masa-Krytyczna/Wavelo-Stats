@@ -1,5 +1,6 @@
 angular.module('myApp', [
     'nvd3',
+    'ngCytoscape',
     'ngMaterial',
     'ngMessages',
     'wavelo.stats.bikesDataService',

@@ -6,6 +6,34 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
         $scope.chart = {};
         $scope.chart.options = BikesChart.setUpChart();
 
+        $scope.tripsGraph = {};
+        $scope.tripsGraph.layout = {
+            name: 'cose',
+            padding: 1,
+            componentSpacing: 40,
+        };
+
+        $scope.tripsGraph.style = [
+            {
+                selector: 'node',
+                style: {
+                    'label': 'data(name)',
+                    'width': 'data(r)',
+                    'height': 'data(r)',
+                    'background-color': 'blue'
+                }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'label': 'data(weight)',
+                    'curve-style': 'bezier',
+                    'target-arrow-shape': 'triangle',
+                    'width': 'data(weight)'
+                }
+            }
+        ];
+
         var firstWeek = 9;
         $scope.weeks = [];
         $scope.currentWeek = parseInt(moment().tz("Europe/Warsaw").format("W"));
@@ -90,6 +118,93 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                     }
 
                 });
+
+            BikesData.getWeeklyTripStatistics($scope.displayedWeek)
+                .then(function (tripData) {
+
+                    var hubs = {};
+                    var trips = [];
+
+                    for (var day in tripData) {
+                        if (tripData[day] === null)
+                            continue;
+
+                        var dhd = tripData[day]['hubs'];
+
+                        for (var h in dhd) {
+                            if (h in hubs) {
+                                hubs[h]['rentals'] += dhd[h]['rentals'];
+                                hubs[h]['returns'] += dhd[h]['returns'];
+                            } else {
+                                hubs[h] = Object.assign({}, dhd[h]);
+                            }
+                        }
+
+                        if (null in hubs) {
+                            hubs[0] = hubs[null];
+                            hubs[0]['name'] = 'Poza stacją';
+                            delete hubs[null];
+                        }
+
+                        var dtd = tripData[day]['trips'];
+                        for (var i = 0; i < dtd.length; ++i) {
+                            var from = dtd[i]['from'];
+                            if (from === null)
+                                from = 0;
+                            var to = dtd[i]['to'];
+                            if (to === null)
+                                to = 0;
+                            var count = dtd[i]['count'];
+
+                            var t = trips.find(function (e) { return e['from'] === from && e['to'] == to; });
+
+                            if (t !== undefined)
+                                t['count'] += count;
+                            else
+                                trips.push({from: from, to: to, count: count });
+                        }
+                    }
+
+                    trips.sort(function (l, r) {return r['count'] - l['count']; });
+                    
+                    $scope.tripsGraph.elements = {};
+
+                    for (var t = 0; t < Math.min(trips.length, 12); ++t) {
+                        var trip = trips[t];
+                        var from = trip['from'];
+                        var to = trip['to'];
+                        var count = trip['count']
+                        $scope.tripsGraph.elements[from + '->' + to] = {
+                            group: 'edges',
+                            data: {
+                                source: from,
+                                target: to,
+                                weight: count
+                            }
+                        };
+
+                        if (!(from in $scope.tripsGraph.elements)) {
+                            $scope.tripsGraph.elements[from] = {
+                                group: 'nodes',
+                                data: {
+                                    name: hubs[from]['name'],
+                                    r: Math.sqrt((hubs[from]['rentals'] + hubs[from]['returns']))
+                                }
+                            };
+                        }
+                        
+                        if (!(to in $scope.tripsGraph.elements)) {
+                            $scope.tripsGraph.elements[to] = {
+                                group: 'nodes',
+                                data: {
+                                    name: hubs[to]['name'],
+                                    r: Math.sqrt((hubs[to]['rentals'] + hubs[to]['returns']))
+                                }
+                            };
+                        }
+                    }
+                });
+            
         }
 
         $scope.changeWeek = function () {

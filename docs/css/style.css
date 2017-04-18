@@ -198,3 +198,7 @@ div#maincontainer{
     height: 100%;
 
 }
+
+.ngCytoscape{
+    height: 600px;
+}
