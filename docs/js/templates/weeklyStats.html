@@ -86,6 +86,26 @@ Wavelo o upublicznienie pełnych i rzetelnych danych.
 <div>
   <md-toolbar>
     <div class="md-toolbar-tools">
+      <h2 flex md-truncate>Najpopularniejsze stacje</h2>
+    </div>
+  </md-toolbar>
+  <table>
+    <tr>
+      <th>Stacja</th>
+      <th>Wypożyczenia</th>
+      <th>Zwroty</th>
+    </tr>
+    <tr ng-repeat="h in hubs">
+      <td>{{ h.name }}</td>
+      <td>{{ h.rentals }}</td>
+      <td>{{ h.returns }}</td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
       <h2 flex md-truncate>Najpopularniejsze trasy</h2>
     </div>
   </md-toolbar>
