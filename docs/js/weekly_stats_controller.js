@@ -153,7 +153,8 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                         $scope.hubs.push(hubs[h]);
 
                     $scope.hubs.sort(function (l, r) { return r['rentals'] + r['returns'] - l['rentals'] - l['returns']; });
-                    $scope.hubs.splice(12);
+                    $scope.popular_hubs = $scope.hubs.slice(0, 12);
+                    $scope.obscure_hubs = $scope.hubs.slice(-12);
                     
                     for (var day in tripData) {
                         if (tripData[day] === null)

@@ -33,11 +33,11 @@ a{
     margin: 10px 10px 10px 10px
 }
 
-.DetailedDataGrid md-grid-list md-grid-tile figure{
+.DetailedDataGrid .PopularityContestGrid md-grid-list md-grid-tile figure{
     height: 120%;
 }
 
-.DetailedDataGrid md-grid-list{
+.DetailedDataGrid .PopularityContestGrid md-grid-list{
     margin: 8px;
 }
 
@@ -47,16 +47,17 @@ a{
     padding-top: 0.3em;
 }
 
-.DetailedDataGrid .blue {
+.DetailedDataGrid .PopularityContestGrid .blue {
   background: #337099; 
   color: white
 }
 
 
-.DetailedDataGrid md-grid-tile {
+.DetailedDataGrid .PopularityContestGrid md-grid-tile {
   transition: all 400ms ease-out 50ms;
 }
 
+ 
 
 .header {
     font-weight: bold;

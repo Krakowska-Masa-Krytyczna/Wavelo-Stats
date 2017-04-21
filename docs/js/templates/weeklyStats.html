@@ -83,24 +83,49 @@ Wavelo o upublicznienie pełnych i rzetelnych danych.
     </md-grid-list>
 </div>
 
-<div>
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <h2 flex md-truncate>Najpopularniejsze stacje</h2>
-    </div>
-  </md-toolbar>
-  <table>
-    <tr>
-      <th>Stacja</th>
-      <th>Wypożyczenia</th>
-      <th>Zwroty</th>
-    </tr>
-    <tr ng-repeat="h in hubs">
-      <td>{{ h.name }}</td>
-      <td>{{ h.rentals }}</td>
-      <td>{{ h.returns }}</td>
-    </tr>
-  </table>
+<div class="PopularityContestGrid">
+  <md-grid-list md-cols-xs="2" md-cols-sm="3" md-cols-md="5" md-cols-gt-md="7" md-gutter="6px" md-gutter-gt-sm="4px" md-row-height="1:1">
+
+    <md-grid-tile md-colors="{background: 'primary-50'}" md-colspan="2" md-rowspan="2">
+      <md-grid-tile-header md-colors="{background: 'primary'}">
+        <span class="header">Popularne stacje</span><br>
+      </md-grid-tile-header>
+      <div class="gridContent">
+        <table>
+          <tr>
+            <th></th>
+            <th>Wypożyczenia</th>
+            <th>Zwroty</th>
+          </tr>
+          <tr ng-repeat="h in popular_hubs">
+            <td>{{ h.name }}</td>
+            <td>{{ h.rentals }}</td>
+            <td>{{ h.returns }}</td>
+          </tr>
+        </table>
+      </div>
+    </md-grid-tile>
+
+    <md-grid-tile md-colors="{background: 'primary-50'}" md-colspan="2" md-rowspan="2">
+      <md-grid-tile-header md-colors="{background: 'primary'}">
+        <span class="header">Niepopularne stacje</span><br>
+      </md-grid-tile-header>
+      <div class="gridContent">
+        <table>
+          <tr>
+            <th></th>
+            <th>Wypożyczenia</th>
+            <th>Zwroty</th>
+          </tr>
+          <tr ng-repeat="h in obscure_hubs">
+            <td>{{ h.name }}</td>
+            <td>{{ h.rentals }}</td>
+            <td>{{ h.returns }}</td>
+          </tr>
+        </table>
+      </div>
+    </md-grid-tile>
+  </md-grid-list>
 </div>
 
 <div>
