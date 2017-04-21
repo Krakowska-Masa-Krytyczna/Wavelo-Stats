@@ -139,13 +139,26 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                                 hubs[h] = Object.assign({}, dhd[h]);
                             }
                         }
+                    }
+                    
+                    if (null in hubs) {
+                        hubs[0] = hubs[null];
+                        hubs[0]['name'] = '00 Poza stacją';
+                        delete hubs[null];
+                    }
 
-                        if (null in hubs) {
-                            hubs[0] = hubs[null];
-                            hubs[0]['name'] = 'Poza stacją';
-                            delete hubs[null];
-                        }
+                    $scope.hubs = [];
 
+                    for (h in hubs)
+                        $scope.hubs.push(hubs[h]);
+
+                    $scope.hubs.sort(function (l, r) { return r['rentals'] + r['returns'] - l['rentals'] - l['returns']; });
+                    $scope.hubs.splice(12);
+                    
+                    for (var day in tripData) {
+                        if (tripData[day] === null)
+                            continue;
+                        
                         var dtd = tripData[day]['trips'];
                         for (var i = 0; i < dtd.length; ++i) {
                             var from = dtd[i]['from'];
@@ -165,7 +178,7 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                         }
                     }
 
-                    trips.sort(function (l, r) {return r['count'] - l['count']; });
+                    trips.sort(function (l, r) { return r['count'] - l['count']; });
                     
                     $scope.tripsGraph.elements = {};
 
