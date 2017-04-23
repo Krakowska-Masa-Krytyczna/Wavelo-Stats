@@ -147,6 +147,12 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                         delete hubs[null];
                     }
 
+                    for (h in hubs) {
+                        var name = hubs[h]['name'];
+                        name = name.substr(name.indexOf(" ") + 1);
+                        hubs[h]['name'] = name;
+                    }
+ 
                     $scope.hubs = [];
 
                     for (h in hubs)
