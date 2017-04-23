@@ -201,5 +201,8 @@ div#maincontainer{
 }
 
 .ngCytoscape{
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
     height: 600px;
 }
