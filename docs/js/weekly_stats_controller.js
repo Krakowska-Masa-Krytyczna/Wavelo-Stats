@@ -122,6 +122,9 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
             BikesData.getWeeklyTripStatistics($scope.displayedWeek)
                 .then(function (tripData) {
 
+                    $scope.hubsLoading = true;
+                    $scope.tripsLoading = true;
+
                     var hubs = {};
                     var trips = [];
 
@@ -161,7 +164,9 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                     $scope.hubs.sort(function (l, r) { return r['rentals'] + r['returns'] - l['rentals'] - l['returns']; });
                     $scope.popular_hubs = $scope.hubs.slice(0, 12);
                     $scope.obscure_hubs = $scope.hubs.slice(-12);
-                    
+
+                    $scope.hubsLoading = false;
+
                     for (var day in tripData) {
                         if (tripData[day] === null)
                             continue;
@@ -223,6 +228,8 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                             };
                         }
                     }
+
+                    $scope.tripsLoading = false;
                 });
             
         }
