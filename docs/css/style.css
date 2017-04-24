@@ -200,6 +200,10 @@ div#maincontainer{
 
 }
 
+td.number{
+    text-align: right;
+}
+
 .ngCytoscape{
     width: 90%;
     margin-right: auto;
