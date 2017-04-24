@@ -91,7 +91,10 @@ Wavelo o upublicznienie pełnych i rzetelnych danych.
         <span class="header">Popularne stacje</span><br>
       </md-grid-tile-header>
       <div class="gridContent">
-        <table>
+        <div ng-show="hubsLoading" layout="row" layout-align="center">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <table ng-show="!hubsLoading">
           <tr>
             <th></th>
             <th>Wypożyczenia</th>
@@ -111,7 +114,10 @@ Wavelo o upublicznienie pełnych i rzetelnych danych.
         <span class="header">Niepopularne stacje</span><br>
       </md-grid-tile-header>
       <div class="gridContent">
-        <table>
+        <div ng-show="hubsLoading" layout="row" layout-align="center">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <table ng-show="!hubsLoading">
           <tr>
             <th></th>
             <th>Wypożyczenia</th>
@@ -134,5 +140,8 @@ Wavelo o upublicznienie pełnych i rzetelnych danych.
       <h2 flex md-truncate>Najpopularniejsze trasy</h2>
     </div>
   </md-toolbar>
-  <cytoscape graph-options="tripsGraph.options" graph-elements="tripsGraph.elements" graph-layout="tripsGraph.layout" graph-style="tripsGraph.style" graph-ready="cy_graph_ready"></cytoscape>
+  <div ng-show="tripsLoading" layout="row" layout-align="center">
+    <md-progress-linear md-mode="indeterminate" class="md-warn"></md-progress-linear>
+  </div>
+  <cytoscape ng-show="!tripsLoading" graph-options="tripsGraph.options" graph-elements="tripsGraph.elements" graph-layout="tripsGraph.layout" graph-style="tripsGraph.style" graph-ready="cy_graph_ready"></cytoscape>
 </div>
