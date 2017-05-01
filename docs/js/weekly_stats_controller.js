@@ -79,7 +79,6 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
 
                     }).bind(null, i));
             }
-
         }
 
         $scope.updateData = function () {
@@ -105,7 +104,6 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                         maxNoBikes = Math.max(maxNoBikes, y);
                     }
 
-
                     $scope.chart.data = chartData['data'];
                     $scope.chart.options.chart.xAxis.tickValues = chartData['tickValues'];
                     $scope.chart.options.chart.yDomain1 = [0, Math.max(15, Math.floor(1.15 * maxNoBikes))];
@@ -116,15 +114,14 @@ angular.module('wavelo.stats.weeklyStats', ['wavelo.stats.bikesDataService'])
                         $scope.rentedNow = chartData['rentedNow'];
                         $scope.brokenNow = chartData['brokenNow'];
                     }
-
                 });
+
+            $scope.hubsLoading = true;
+            $scope.tripsLoading = true;
 
             BikesData.getWeeklyTripStatistics($scope.displayedWeek)
                 .then(function (tripData) {
-
-                    $scope.hubsLoading = true;
-                    $scope.tripsLoading = true;
-
+                    
                     var hubs = {};
                     var trips = [];
 
